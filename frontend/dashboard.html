@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organizer Dashboard | MatchGuard</title>
+  <meta name="author" content="Elias" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand"><span class="brand-badge">MG</span>MatchGuard</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="dashboard.html">Organizer Dashboard</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding-bottom: 24px;">
+      <div class="container">
+        <h1>Organizer dashboard</h1>
+        <p class="lead">Every flagged player across every tournament MatchGuard is protecting, in one feed.</p>
+      </div>
+    </section>
+
+    <section style="padding-top: 24px;">
+      <div class="container">
+        <div class="form-group" style="max-width: 340px;">
+          <label for="tournament-filter">Filter by tournament</label>
+          <select id="tournament-filter">
+            <option value="">All tournaments</option>
+          </select>
+        </div>
+
+        <div id="dashboard-error"></div>
+
+        <div class="stat-row" id="dashboard-stats"></div>
+
+        <h2>Flagged players</h2>
+        <p class="section-sub">Anyone whose uploaded scan matched a known cheat signature or file hash.</p>
+        <div id="flagged-table-wrap">
+          <p class="muted">Loading&hellip;</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div>&copy; <span id="footer-year"></span> MatchGuard. A Cloud Computing final project.</div>
+      <div>Built by <strong>Elias</strong> &mdash; Cloud Computing, Aug 2026</div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

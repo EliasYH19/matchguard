@@ -1,0 +1,12 @@
+MatchGuard system snapshot
+player: qu1ckscope99
+os: Windows 10 22H2
+running_processes:
+  - explorer.exe
+  - steam.exe
+  - valorant.exe
+  - cheatengine-x86_64.exe
+  - injector.dll (loaded into valorant.exe)
+  - aimbot_v3_config.ini present in appdata
+gpu_driver: amd 24.2.1
+notes: user claims the extra tools are "for another game"

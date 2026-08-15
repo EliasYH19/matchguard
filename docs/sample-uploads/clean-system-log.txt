@@ -1,0 +1,12 @@
+MatchGuard system snapshot
+player: xX_ShadowFrag_Xx
+os: Windows 11 23H2
+running_processes:
+  - explorer.exe
+  - discord.exe
+  - steam.exe
+  - valorant.exe
+  - obs64.exe
+  - chrome.exe
+gpu_driver: nvidia 552.44
+notes: standard streaming setup, nothing else running

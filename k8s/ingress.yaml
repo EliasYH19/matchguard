@@ -1,0 +1,25 @@
+# Routes everything through the frontend Service, which itself
+# reverse-proxies /api/* to the two backend services (see
+# frontend/nginx.conf). Assumes an nginx ingress controller is installed
+# on the cluster (`az aks` clusters need this added, same as we did with
+# AKS in the Kubernetes lab).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: matchguard-ingress
+  namespace: matchguard
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: matchguard.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

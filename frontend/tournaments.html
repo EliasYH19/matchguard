@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tournaments | MatchGuard</title>
+  <meta name="author" content="Elias" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand"><span class="brand-badge">MG</span>MatchGuard</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="dashboard.html">Organizer Dashboard</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding-bottom: 24px;">
+      <div class="container">
+        <h1>Tournaments</h1>
+        <p class="lead">Browse tournaments protected by MatchGuard, or set up your own in a couple of minutes.</p>
+      </div>
+    </section>
+
+    <section style="padding-top: 24px;">
+      <div class="container">
+
+        <div class="card" id="create-tournament-card">
+          <h3>Create a tournament</h3>
+          <p class="muted">Fill this in once you've picked a package on the <a href="packages.html">packages page</a> (or just pick one below).</p>
+          <div id="create-error"></div>
+          <div id="create-success"></div>
+          <form id="create-tournament-form" enctype="multipart/form-data">
+            <div class="grid grid-2">
+              <div class="form-group">
+                <label for="name">Tournament name</label>
+                <input type="text" id="name" name="name" placeholder="e.g. Berlin Winter Cup" required />
+              </div>
+              <div class="form-group">
+                <label for="game">Game</label>
+                <input type="text" id="game" name="game" placeholder="e.g. Valorant" required />
+              </div>
+              <div class="form-group">
+                <label for="format">Format</label>
+                <select id="format" name="format">
+                  <option value="online">Online</option>
+                  <option value="lan">LAN</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="start_date">Start date</label>
+                <input type="date" id="start_date" name="start_date" required />
+              </div>
+              <div class="form-group">
+                <label for="organizer_name">Organizer name</label>
+                <input type="text" id="organizer_name" name="organizer_name" placeholder="Your name or org" required />
+              </div>
+              <div class="form-group">
+                <label for="package_id">Anti-cheat package</label>
+                <select id="package_id" name="package_id" required>
+                  <option value="">Loading packages&hellip;</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="banner">Tournament banner image (optional)</label>
+              <input type="file" id="banner" name="banner" accept="image/*" />
+              <p class="form-note">Stored in Azure Blob Storage (container: tournament-banners). Falls back to local disk storage if no Azure account is connected yet.</p>
+            </div>
+            <button type="submit" class="btn btn-primary">Create tournament</button>
+          </form>
+        </div>
+
+        <div class="spacer-32"></div>
+        <h2>Active tournaments</h2>
+        <p class="section-sub">Click one to register a player or upload a scan.</p>
+        <div id="tournaments-error"></div>
+        <div id="tournaments-grid" class="grid grid-3">
+          <p class="muted">Loading tournaments&hellip;</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div>&copy; <span id="footer-year"></span> MatchGuard. A Cloud Computing final project.</div>
+      <div>Built by <strong>Elias</strong> &mdash; Cloud Computing, Aug 2026</div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tournaments.js"></script>
+</body>
+</html>

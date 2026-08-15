@@ -1,0 +1,47 @@
+# MatchGuard CI - mirrors the Jenkinsfile stages so the pipeline still runs
+# somewhere automatically even without a Jenkins server handy (GitHub Actions
+# is free on public repos). Author: Elias
+name: MatchGuard CI
+
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-tournament-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install -r services/tournament-service/requirements.txt
+      - name: Run tests
+        run: pytest tests/test_tournament_service.py
+
+  test-scan-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install -r services/scan-service/requirements.txt
+      - name: Run tests
+        run: pytest tests/test_scan_service.py
+
+  build-images:
+    needs: [test-tournament-service, test-scan-service]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build tournament-service image
+        run: docker build -t matchguard/tournament-service:${{ github.sha }} services/tournament-service
+      - name: Build scan-service image
+        run: docker build -t matchguard/scan-service:${{ github.sha }} services/scan-service
+      - name: Build frontend image
+        run: docker build -t matchguard/frontend:${{ github.sha }} frontend

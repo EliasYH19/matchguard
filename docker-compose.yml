@@ -1,0 +1,53 @@
+# MatchGuard - local orchestration for development/testing.
+# `docker compose up --build` brings up all three containers on one Docker
+# network - same shape as what runs in Kubernetes (see k8s/), just without
+# the cluster.
+#
+# Author: Elias
+
+services:
+  tournament-service:
+    build: ./services/tournament-service
+    container_name: matchguard-tournament-service
+    ports:
+      - "5001:5001"
+    environment:
+      - AZURE_STORAGE_CONNECTION_STRING=${AZURE_STORAGE_CONNECTION_STRING:-}
+      - BANNER_CONTAINER_NAME=tournament-banners
+    volumes:
+      - tournament_data:/app_data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  scan-service:
+    build: ./services/scan-service
+    container_name: matchguard-scan-service
+    ports:
+      - "5002:5002"
+    environment:
+      - AZURE_STORAGE_CONNECTION_STRING=${AZURE_STORAGE_CONNECTION_STRING:-}
+      - EVIDENCE_CONTAINER_NAME=scan-evidence
+      - TOURNAMENT_SERVICE_URL=http://tournament-service:5001
+      - NOTIFY_FUNCTION_URL=${NOTIFY_FUNCTION_URL:-}
+    depends_on:
+      - tournament-service
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5002/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build: ./frontend
+    container_name: matchguard-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - tournament-service
+      - scan-service
+
+volumes:
+  tournament_data:

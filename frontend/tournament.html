@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tournament Details | MatchGuard</title>
+  <meta name="author" content="Elias" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand"><span class="brand-badge">MG</span>MatchGuard</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="dashboard.html">Organizer Dashboard</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding-bottom: 24px;">
+      <div class="container">
+        <div id="tournament-error"></div>
+        <div id="tournament-header">
+          <p class="muted">Loading tournament&hellip;</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
+      <div class="container">
+
+        <div id="purchase-card" class="card" style="display:none;">
+          <h3>Finish setting up anti-cheat coverage</h3>
+          <p class="muted">This tournament hasn't been activated yet. Confirm payment for the selected package to open registration.</p>
+          <div id="purchase-error"></div>
+          <button id="purchase-btn" class="btn btn-primary">Confirm purchase</button>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Register a player</h3>
+            <div id="register-error"></div>
+            <div id="register-success"></div>
+            <form id="register-form">
+              <div class="form-group">
+                <label for="gamertag">Gamertag</label>
+                <input type="text" id="gamertag" name="gamertag" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Submit an anti-cheat scan</h3>
+            <p class="muted">Upload the exported process/system log for an already-registered player.</p>
+            <div id="scan-error"></div>
+            <div id="scan-success"></div>
+            <form id="scan-form" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="registration_select">Player</label>
+                <select id="registration_select" name="registration_id" required>
+                  <option value="">Loading registered players&hellip;</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="evidence">System/process log file (.txt or .json)</label>
+                <input type="file" id="evidence" name="evidence" accept=".txt,.json,.log" required />
+                <p class="form-note">Try our two sample files from <a href="about.html#samples">the About page</a> - one comes back clear, the other flagged.</p>
+              </div>
+              <button type="submit" class="btn btn-primary">Run scan</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="spacer-32"></div>
+        <h2>Registered players</h2>
+        <div id="registrations-error"></div>
+        <div id="registrations-table-wrap">
+          <p class="muted">Loading registrations&hellip;</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div>&copy; <span id="footer-year"></span> MatchGuard. A Cloud Computing final project.</div>
+      <div>Built by <strong>Elias</strong> &mdash; Cloud Computing, Aug 2026</div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tournament-detail.js"></script>
+</body>
+</html>

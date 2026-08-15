@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | MatchGuard</title>
+  <meta name="author" content="Elias" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand"><span class="brand-badge">MG</span>MatchGuard</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="dashboard.html">Organizer Dashboard</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding-bottom: 24px;">
+      <div class="container">
+        <h1>About MatchGuard</h1>
+        <p class="lead">A Cloud Computing final project - anti-cheat verification as a service for grassroots and mid-size gaming tournaments.</p>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
+      <div class="container">
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Why this idea</h3>
+            <p class="muted">
+              Most anti-cheat tooling (Vanguard, EAC, BattlEye) is built into the game
+              client and out of reach for community-run tournaments using games that
+              don't ship one, or LAN events running console/emulator brackets. MatchGuard
+              plugs that gap: organizers buy a package, players upload a snapshot, and the
+              organizer gets a verdict and paper trail without writing a line of code.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Architecture</h3>
+            <p class="muted">Two independent Flask microservices behind a static frontend, one serverless function, Azure Blob Storage, Docker + Kubernetes.</p>
+            <ul>
+              <li class="muted"><strong>frontend</strong> - static HTML/CSS/JS, served by nginx</li>
+              <li class="muted"><strong>tournament-service</strong> - tournaments, packages, purchases, registrations (REST API)</li>
+              <li class="muted"><strong>scan-service</strong> - evidence upload, hashing, signature scan, flagged feed (REST API)</li>
+              <li class="muted"><strong>notify-function</strong> - Azure Function, generates verification certificates (serverless)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="spacer-32"></div>
+        <div class="card" id="samples">
+          <h3>Try the scan yourself</h3>
+          <p class="muted">Two tiny sample log files are included in the repo under <span class="tag-code">docs/sample-uploads/</span> so you (or your grader) can test both verdict paths without needing a real cheat tool:</p>
+          <ul>
+            <li class="muted"><span class="tag-code">clean-system-log.txt</span> &mdash; comes back <strong>CLEAR</strong></li>
+            <li class="muted"><span class="tag-code">suspicious-system-log.txt</span> &mdash; comes back <strong>FLAGGED</strong> (contains "aimbot" and "cheatengine" strings)</li>
+          </ul>
+          <p class="muted">Register a player on any tournament, then use these files in the "Submit an anti-cheat scan" form.</p>
+        </div>
+
+        <div class="spacer-32"></div>
+        <div class="card">
+          <h3>Contact / Author</h3>
+          <p class="muted">Built by <strong>Elias</strong> for the Cloud Computing module, submitted August 2026.</p>
+          <p class="muted">Questions about the project or the code: elias@matchguard.example (placeholder contact for grading purposes).</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div>&copy; <span id="footer-year"></span> MatchGuard. A Cloud Computing final project.</div>
+      <div>Built by <strong>Elias</strong> &mdash; Cloud Computing, Aug 2026</div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

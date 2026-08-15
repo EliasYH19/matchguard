@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scan-service
+  namespace: matchguard
+  labels:
+    app: scan-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: scan-service
+  template:
+    metadata:
+      labels:
+        app: scan-service
+    spec:
+      containers:
+        - name: scan-service
+          image: matchguard/scan-service:latest
+          ports:
+            - containerPort: 5002
+          env:
+            - name: EVIDENCE_CONTAINER_NAME
+              value: "scan-evidence"
+            - name: TOURNAMENT_SERVICE_URL
+              value: "http://tournament-service:5001"
+            - name: NOTIFY_FUNCTION_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: matchguard-config
+                  key: NOTIFY_FUNCTION_URL
+                  optional: true
+            - name: AZURE_STORAGE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: azure-storage-secret
+                  key: AZURE_STORAGE_CONNECTION_STRING
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 5002
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 5002
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scan-service
+  namespace: matchguard
+spec:
+  selector:
+    app: scan-service
+  ports:
+    - port: 5002
+      targetPort: 5002
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: matchguard-config
+  namespace: matchguard
+data:
+  # Fill this in once the notify-function is deployed to Azure, e.g.
+  # https://matchguard-notify.azurewebsites.net/api/notify?code=xxxx
+  # Leave blank to use scan-service's local certificate-generation fallback.
+  NOTIFY_FUNCTION_URL: ""
